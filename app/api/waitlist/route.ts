@@ -19,13 +19,14 @@ export async function POST(
     return NextResponse.json({ error: msg }, { status: 400 });
   }
 
-  const { firstName, lastName, email, gender } = parsed.data;
+  const { firstName, lastName, email, phone, gender } = parsed.data;
 
   try {
     const result = await insertLead({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: email.trim(),
+      phone,
       gender,
     });
 

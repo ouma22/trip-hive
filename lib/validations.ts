@@ -6,6 +6,11 @@ export const waitlistBodySchema = z.object({
   firstName: z.string().min(1, "Prénom requis").max(120),
   lastName: z.string().min(1, "Nom requis").max(120),
   email: z.string().email("Email invalide").max(320),
+  phone: z
+    .string()
+    .trim()
+    .min(8, "Numéro de téléphone requis")
+    .max(32, "Numéro trop long"),
   gender: genderSchema,
 });
 

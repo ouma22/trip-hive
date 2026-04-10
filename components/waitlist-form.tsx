@@ -18,6 +18,7 @@ export function WaitlistForm() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [gender, setGender] = useState<Gender | "">("");
   const [submit, setSubmit] = useState<SubmitState>({ status: "idle" });
 
@@ -38,6 +39,7 @@ export function WaitlistForm() {
           firstName,
           lastName,
           email,
+          phone,
           gender,
         }),
       });
@@ -63,6 +65,7 @@ export function WaitlistForm() {
       setFirstName("");
       setLastName("");
       setEmail("");
+      setPhone("");
       setGender("");
     } catch {
       setSubmit({
@@ -104,7 +107,6 @@ export function WaitlistForm() {
               required
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              placeholder="Ex: Jean"
               className="form-input min-h-11 rounded-xl border-0 bg-slate-50 px-4 py-3 text-base font-medium sm:rounded-2xl sm:px-6 sm:py-4"
             />
           </div>
@@ -119,7 +121,6 @@ export function WaitlistForm() {
               required
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              placeholder="Ex: Dupont"
               className="form-input min-h-11 rounded-xl border-0 bg-slate-50 px-4 py-3 text-base font-medium sm:rounded-2xl sm:px-6 sm:py-4"
             />
           </div>
@@ -138,7 +139,23 @@ export function WaitlistForm() {
             required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="votre@email.com"
+            className="form-input min-h-11 rounded-xl border-0 bg-slate-50 px-4 py-3 text-base font-medium sm:rounded-2xl sm:px-6 sm:py-4"
+          />
+        </div>
+
+        <div className="min-w-0 space-y-2">
+          <Label htmlFor={`${formId}-phone`} className="text-sm font-semibold text-slate-800">
+            Téléphone
+          </Label>
+          <Input
+            id={`${formId}-phone`}
+            name="phone"
+            type="tel"
+            autoComplete="tel"
+            inputMode="tel"
+            required
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             className="form-input min-h-11 rounded-xl border-0 bg-slate-50 px-4 py-3 text-base font-medium sm:rounded-2xl sm:px-6 sm:py-4"
           />
         </div>

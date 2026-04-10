@@ -26,19 +26,21 @@ function toDto(doc: LeadDocument): LeadDto {
     firstName: doc.firstName,
     lastName: doc.lastName,
     email: doc.email,
+    phone: doc.phone ?? "",
     gender: doc.gender,
     createdAt: doc.createdAt.toISOString(),
   };
 }
 
 export async function insertLead(
-  input: Omit<LeadDocument, "_id" | "createdAt">,
+  input: Omit<LeadDocument, "_id" | "createdAt"> & { phone: string },
 ): Promise<{ ok: true; lead: LeadDto } | { ok: false; duplicate: true }> {
   const collection = await getCollection();
   await ensureIndexes(collection);
   const doc: LeadDocument = {
     ...input,
     email: input.email.toLowerCase().trim(),
+    phone: input.phone.trim(),
     createdAt: new Date(),
   };
   try {

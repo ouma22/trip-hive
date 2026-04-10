@@ -7,6 +7,8 @@ export interface LeadDocument {
   firstName: string;
   lastName: string;
   email: string;
+  /** Absent on legacy documents created before phone was collected */
+  phone?: string;
   gender: Gender;
   createdAt: Date;
 }
@@ -16,6 +18,7 @@ export interface LeadDto {
   firstName: string;
   lastName: string;
   email: string;
+  phone: string;
   gender: Gender;
   createdAt: string;
 }
