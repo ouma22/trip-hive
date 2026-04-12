@@ -5,7 +5,7 @@ import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import type { Gender } from "@/types/lead";
+import type { Gender, LeadProfile } from "@/types/lead";
 
 type SubmitState =
   | { status: "idle" }
@@ -20,12 +20,17 @@ export function WaitlistForm() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState<Gender | "">("");
+  const [profile, setProfile] = useState<LeadProfile | "">("");
   const [submit, setSubmit] = useState<SubmitState>({ status: "idle" });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!gender) {
-      setSubmit({ status: "error", message: "Veuillez sélectionner une option." });
+      setSubmit({ status: "error", message: "Veuillez sélectionner une option pour le sexe." });
+      return;
+    }
+    if (!profile) {
+      setSubmit({ status: "error", message: "Veuillez indiquer qui vous êtes." });
       return;
     }
 
@@ -41,6 +46,7 @@ export function WaitlistForm() {
           email,
           phone,
           gender,
+          profile,
         }),
       });
 
@@ -67,6 +73,7 @@ export function WaitlistForm() {
       setEmail("");
       setPhone("");
       setGender("");
+      setProfile("");
     } catch {
       setSubmit({
         status: "error",
@@ -159,6 +166,72 @@ export function WaitlistForm() {
             className="form-input min-h-11 rounded-xl border-0 bg-slate-50 px-4 py-3 text-base font-medium sm:rounded-2xl sm:px-6 sm:py-4"
           />
         </div>
+
+        <fieldset className="min-w-0 space-y-3 border-0 p-0">
+          <legend className="text-sm font-semibold text-slate-800">Qui êtes-vous ?</legend>
+          <p className="text-sm text-slate-600">
+            Aidez-nous à comprendre comment Trip Hive peut vous correspondre.
+          </p>
+          <div
+            className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4"
+            role="radiogroup"
+            aria-required="true"
+            aria-label="Qui êtes-vous"
+          >
+            {(
+              [
+                {
+                  id: `${formId}-voyageur`,
+                  label: "Voyageur",
+                  value: "voyageur" as const,
+                },
+                {
+                  id: `${formId}-artisan`,
+                  label: "Artisan ou créateur local",
+                  value: "artisan" as const,
+                },
+                {
+                  id: `${formId}-hebergeur`,
+                  label: "Hébergeur",
+                  value: "hebergeur" as const,
+                },
+                {
+                  id: `${formId}-pro`,
+                  label: "Pro du tourisme",
+                  value: "pro_tourisme" as const,
+                },
+                {
+                  id: `${formId}-curieux`,
+                  label: "Curieux",
+                  value: "curieux" as const,
+                },
+                {
+                  id: `${formId}-profil-autre`,
+                  label: "Autre",
+                  value: "autre" as const,
+                },
+              ] as const
+            ).map(({ id, label, value }) => (
+              <div key={value} className="relative min-w-0">
+                <input
+                  type="radio"
+                  name="profile"
+                  id={id}
+                  value={value}
+                  checked={profile === value}
+                  onChange={() => setProfile(value)}
+                  className="peer sr-only"
+                />
+                <label
+                  htmlFor={id}
+                  className="flex min-h-11 cursor-pointer items-center justify-center rounded-xl border-2 border-slate-200 bg-slate-50 px-3 py-3 text-center text-sm font-semibold text-slate-800 transition hover:border-slate-300 peer-checked:border-teal-600 peer-checked:bg-teal-50 peer-checked:text-teal-900 peer-focus-visible:outline-none peer-focus-visible:ring-2 peer-focus-visible:ring-teal-600 peer-focus-visible:ring-offset-2 sm:rounded-2xl sm:py-4 sm:text-base"
+                >
+                  {label}
+                </label>
+              </div>
+            ))}
+          </div>
+        </fieldset>
 
         <fieldset className="min-w-0 space-y-3 border-0 p-0">
           <legend className="text-sm font-semibold text-slate-800">Sexe</legend>

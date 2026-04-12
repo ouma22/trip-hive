@@ -33,6 +33,25 @@ function genderLabel(g: LeadDto["gender"]): string {
   }
 }
 
+function profileLabel(p: LeadDto["profile"]): string {
+  switch (p) {
+    case "voyageur":
+      return "Voyageur";
+    case "artisan":
+      return "Artisan ou créateur local";
+    case "hebergeur":
+      return "Hébergeur";
+    case "pro_tourisme":
+      return "Pro du tourisme";
+    case "curieux":
+      return "Curieux";
+    case "autre":
+      return "Autre";
+    default:
+      return p;
+  }
+}
+
 function TableSkeleton() {
   return (
     <div className="space-y-3 p-1">
@@ -245,6 +264,9 @@ function DashboardContent() {
                           Téléphone
                         </span>
                       </TableHead>
+                      <TableHead className="min-w-44 font-semibold text-slate-700">
+                        Qui êtes-vous ?
+                      </TableHead>
                       <TableHead className="min-w-24 font-semibold text-slate-700">Sexe</TableHead>
                       <TableHead className="min-w-36 text-right font-semibold text-slate-700">
                         Date
@@ -283,6 +305,7 @@ function DashboardContent() {
                             <span className="text-muted-foreground">—</span>
                           )}
                         </TableCell>
+                        <TableCell className="max-w-xs text-slate-600">{profileLabel(lead.profile)}</TableCell>
                         <TableCell className="text-slate-600">{genderLabel(lead.gender)}</TableCell>
                         <TableCell className="text-right text-sm text-muted-foreground tabular-nums">
                           {new Date(lead.createdAt).toLocaleString("fr-FR")}

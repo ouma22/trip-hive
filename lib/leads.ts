@@ -1,6 +1,8 @@
 import type { Collection } from "mongodb";
 import { MongoServerError } from "mongodb";
-import type { LeadDocument, LeadDto } from "@/types/lead";
+import type { LeadDocument, LeadDto, LeadProfile } from "@/types/lead";
+
+const LEGACY_PROFILE_DEFAULT: LeadProfile = "curieux";
 import { getDb } from "@/lib/mongodb";
 
 const COLLECTION = "leads";
@@ -28,12 +30,13 @@ function toDto(doc: LeadDocument): LeadDto {
     email: doc.email,
     phone: doc.phone ?? "",
     gender: doc.gender,
+    profile: doc.profile ?? LEGACY_PROFILE_DEFAULT,
     createdAt: doc.createdAt.toISOString(),
   };
 }
 
 export async function insertLead(
-  input: Omit<LeadDocument, "_id" | "createdAt"> & { phone: string },
+  input: Omit<LeadDocument, "_id" | "createdAt"> & { phone: string; profile: LeadProfile },
 ): Promise<{ ok: true; lead: LeadDto } | { ok: false; duplicate: true }> {
   const collection = await getCollection();
   await ensureIndexes(collection);

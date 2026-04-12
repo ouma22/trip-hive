@@ -14,6 +14,25 @@ function genderLabelFr(g: LeadDto["gender"]): string {
   }
 }
 
+function profileLabelFr(p: LeadDto["profile"]): string {
+  switch (p) {
+    case "voyageur":
+      return "Voyageur";
+    case "artisan":
+      return "Artisan ou créateur local";
+    case "hebergeur":
+      return "Hébergeur";
+    case "pro_tourisme":
+      return "Pro du tourisme";
+    case "curieux":
+      return "Curieux";
+    case "autre":
+      return "Autre";
+    default:
+      return p;
+  }
+}
+
 function sheetDate(createdAt: string): string {
   return new Date(createdAt).toLocaleString("fr-FR", {
     dateStyle: "short",
@@ -26,6 +45,7 @@ const HEADER_ROW = [
   "Nom",
   "Email",
   "Téléphone",
+  "Qui êtes-vous ?",
   "Sexe",
   "Date d'inscription",
 ] as const;
@@ -44,6 +64,7 @@ export function downloadLeadsExcel(leads: LeadDto[], filenameBase = "trip-hive-w
       Nom: lead.lastName,
       Email: lead.email,
       Téléphone: lead.phone,
+      "Qui êtes-vous ?": profileLabelFr(lead.profile),
       Sexe: genderLabelFr(lead.gender),
       "Date d'inscription": sheetDate(lead.createdAt),
     }));

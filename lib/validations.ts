@@ -2,6 +2,15 @@ import { z } from "zod";
 
 export const genderSchema = z.enum(["homme", "femme", "autre"]);
 
+export const leadProfileSchema = z.enum([
+  "voyageur",
+  "artisan",
+  "hebergeur",
+  "pro_tourisme",
+  "curieux",
+  "autre",
+]);
+
 export const waitlistBodySchema = z.object({
   firstName: z.string().min(1, "Prénom requis").max(120),
   lastName: z.string().min(1, "Nom requis").max(120),
@@ -12,6 +21,7 @@ export const waitlistBodySchema = z.object({
     .min(8, "Numéro de téléphone requis")
     .max(32, "Numéro trop long"),
   gender: genderSchema,
+  profile: leadProfileSchema,
 });
 
 export type WaitlistBody = z.infer<typeof waitlistBodySchema>;
