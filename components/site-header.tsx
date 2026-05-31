@@ -37,11 +37,17 @@ export function SiteHeader() {
 
   const links = (
     <>
-      <Link href="/#about" className={linkBase} onClick={() => setOpen(false)}>
-        Vision
+      <Link href="/#vision" className={linkBase} onClick={() => setOpen(false)}>
+        Manifeste
       </Link>
-      <Link href="/#impact" className={linkBase} onClick={() => setOpen(false)}>
-        Impact
+      <Link href="/#pillars" className={linkBase} onClick={() => setOpen(false)}>
+        Écosystème
+      </Link>
+      <Link href="/#destinations" className={linkBase} onClick={() => setOpen(false)}>
+        Destinations
+      </Link>
+      <Link href="/#faq" className={linkBase} onClick={() => setOpen(false)}>
+        FAQ
       </Link>
       <div
         className="flex items-center gap-2 rounded-full border border-slate-300 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-800"
